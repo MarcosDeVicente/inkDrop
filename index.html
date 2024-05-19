@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marbling Digital con p5.js</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <link rel="stylesheet" href="index.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="drop.js" defer></script>
+    <script src="sketch.js" defer></script>
+    <script src="events.js" defer></script>
   </head>
   <body>
     <div class="buttonContainer">
@@ -19,7 +22,7 @@
         value="#000000"
         style="display: none;"
       />
-      <button id="dropButton">DropColor</button>
+      <button id="dropButton">Drop Color</button>
       <input
         type="color"
         id="dropColorPicker"
@@ -27,7 +30,7 @@
         value="#0000FF"
         style="display: none;"
       />
-      <button id="randomButton">RandomDrop</button>
+      <button id="randomButton">Random Drop</button>
       <input
         type="checkbox"
         id="randomDropColor"
@@ -36,53 +39,5 @@
         style="display: none;"
       />
     </div>
-
-    <script src="sketch.js"></script>
-    <script src="drop.js"></script>
-    <script>
-      document
-        .getElementById("clearButton")
-        .addEventListener("click", function () {
-          drops = [];
-        });
-
-      document
-        .getElementById("downloadButton")
-        .addEventListener("click", function () {
-          saveCanvas("marbling_art", "jpg");
-        });
-
-      document
-        .getElementById("backgroundButton")
-        .addEventListener("click", function () {
-          document.getElementById("backgroundColorPicker").click();
-        });
-
-      document
-        .getElementById("dropButton")
-        .addEventListener("click", function () {
-          document.getElementById("dropColorPicker").click();
-        });
-
-      document
-        .getElementById("randomButton")
-        .addEventListener("click", function () {
-          let checkbox = document.getElementById("randomDropColor");
-          checkbox.checked = !checkbox.checked;
-          toggleRandomDropColor(checkbox.checked);
-        });
-
-      document
-        .getElementById("backgroundColorPicker")
-        .addEventListener("input", function (event) {
-          setBackground(event.target.value);
-        });
-
-      document
-        .getElementById("dropColorPicker")
-        .addEventListener("input", function (event) {
-          setDropColor(event.target.value);
-        });
-    </script>
   </body>
 </html>
