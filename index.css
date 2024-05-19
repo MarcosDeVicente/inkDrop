@@ -18,17 +18,19 @@ html {
   ); /* Quitar el resplandor al tocar en iOS */
   touch-action: none; /* Deshabilitar acciones táctiles como el zoom */
 }
-
-#clearButton,
-#downloadButton {
+.buttonContainer {
   position: absolute;
-  top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+button {
   padding: 10px;
-  background-color: transparent;
-  color: #fff;
   border: none;
   cursor: pointer;
   z-index: 10;
+  background-color: transparent;
+  color: white;
 }
 
 #clearButton {

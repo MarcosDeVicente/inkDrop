@@ -8,8 +8,35 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <button id="clearButton">Clear Canvas</button>
-    <button id="downloadButton">Download JPEG</button>
+    <div class="buttonContainer">
+      <button id="clearButton">Clear Canvas</button>
+      <button id="downloadButton">Download JPEG</button>
+      <button id="backgroundButton">Background</button>
+      <input
+        type="color"
+        id="backgroundColorPicker"
+        name="backgroundColorPicker"
+        value="#000000"
+        style="display: none;"
+      />
+      <button id="dropButton">DropColor</button>
+      <input
+        type="color"
+        id="dropColorPicker"
+        name="dropColorPicker"
+        value="#0000FF"
+        style="display: none;"
+      />
+      <button id="randomButton">RandomDrop</button>
+      <input
+        type="checkbox"
+        id="randomDropColor"
+        name="randomDropColor"
+        checked
+        style="display: none;"
+      />
+    </div>
+
     <script src="sketch.js"></script>
     <script src="drop.js"></script>
     <script>
@@ -23,6 +50,38 @@
         .getElementById("downloadButton")
         .addEventListener("click", function () {
           saveCanvas("marbling_art", "jpg");
+        });
+
+      document
+        .getElementById("backgroundButton")
+        .addEventListener("click", function () {
+          document.getElementById("backgroundColorPicker").click();
+        });
+
+      document
+        .getElementById("dropButton")
+        .addEventListener("click", function () {
+          document.getElementById("dropColorPicker").click();
+        });
+
+      document
+        .getElementById("randomButton")
+        .addEventListener("click", function () {
+          let checkbox = document.getElementById("randomDropColor");
+          checkbox.checked = !checkbox.checked;
+          toggleRandomDropColor(checkbox.checked);
+        });
+
+      document
+        .getElementById("backgroundColorPicker")
+        .addEventListener("input", function (event) {
+          setBackground(event.target.value);
+        });
+
+      document
+        .getElementById("dropColorPicker")
+        .addEventListener("input", function (event) {
+          setDropColor(event.target.value);
         });
     </script>
   </body>

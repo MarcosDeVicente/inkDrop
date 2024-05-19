@@ -9,10 +9,12 @@ let dropInterval = 0; // Intervalo mínimo entre gotas en milisegundos, ajustabl
 let mouseMovedSincePress = false; // Variable para verificar si el mouse se ha movido desde que se presionó
 let currentDropColor; // Variable para almacenar el color de las gotas mientras se arrastra
 let needsRedraw = true;
+let randomDropColor = true; // Variable para controlar si el color de la gota es aleatorio
+let backgroundColor = "#000000"; // Color de fondo inicial
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(0);
+  background(backgroundColor);
   dropSize = 10000; // Tamaño inicial de la gota
   setInterval(drawCanvas, 16); // Cambiar a setInterval para redibujar a 60 FPS
 }
@@ -21,7 +23,9 @@ function mousePressed(e) {
   pressStartTime = millis(); // Registrar el tiempo en que se empieza a presionar el mouse
   isPressing = true; // Indicar que se está presionando el mouse
   mouseMovedSincePress = false; // Resetear la variable de movimiento del mouse
-  currentDropColor = color(random(255), random(255), random(255)); // Generar un nuevo color para la serie de gotas
+  currentDropColor = randomDropColor
+    ? color(random(255), random(255), random(255))
+    : currentDropColor; // Generar un nuevo color si es aleatorio
   needsRedraw = true; // Indicar que se necesita redibujar
 }
 
@@ -34,8 +38,10 @@ function mouseReleased(e) {
       mouseX,
       mouseY,
       dropRadius,
-      color(random(255), random(255), random(255))
-    ); // Usar un color aleatorio
+      randomDropColor
+        ? color(random(255), random(255), random(255))
+        : currentDropColor
+    ); // Usar un color aleatorio o fijo
     for (let other of drops) {
       other.marble(drop);
     }
@@ -52,7 +58,6 @@ function mouseReleased(e) {
   isPressing = false; // Indicar que se dejó de presionar el mouse
 }
 
-// sketch.js
 function mouseDragged(e) {
   if (isPressing && millis() - lastDropTime > dropInterval) {
     createDrop(mouseX, mouseY, currentDropColor); // Pasar el color actual
@@ -64,7 +69,7 @@ function mouseDragged(e) {
 
 function drawCanvas() {
   if (needsRedraw) {
-    background(0);
+    background(backgroundColor);
     noStroke();
     // Dibujar las gotas existentes
     for (let drop of drops) {
@@ -100,4 +105,18 @@ function createDrop(x, y, col) {
     drops.shift(); // Eliminar la gota más antigua
   }
   needsRedraw = true; // Indicar que se necesita redibujar
+}
+
+// Funciones para actualizar los valores de los selectores de color
+function setBackground(colorValue) {
+  backgroundColor = colorValue;
+  needsRedraw = true; // Necesitar redibujar el canvas
+}
+
+function setDropColor(colorValue) {
+  currentDropColor = color(colorValue);
+}
+
+function toggleRandomDropColor(isRandom) {
+  randomDropColor = isRandom;
 }
