@@ -1,3 +1,4 @@
+// sketch.js
 let drops = [];
 let pressStartTime;
 let dropSize;
@@ -13,7 +14,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(0);
   dropSize = 10000; // Tamaño inicial de la gota
-  requestAnimationFrame(drawCanvas); // Iniciar el bucle de animación
+  setInterval(drawCanvas, 16); // Cambiar a setInterval para redibujar a 60 FPS
 }
 
 function mousePressed(e) {
@@ -79,7 +80,6 @@ function drawCanvas() {
     fill(100, 100, 255, 100); // Color de la gota en tiempo real
     ellipse(mouseX, mouseY, dropSize * 2); // Dibujar la gota en el cursor
   }
-  requestAnimationFrame(drawCanvas); // Solicitar el siguiente cuadro de animación
 }
 
 function createDrop(x, y, col) {

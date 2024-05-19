@@ -1,4 +1,5 @@
-const circleDetail = 360;
+// drop.js
+const circleDetail = 180; // Reducir a 180 vértices
 
 class Drop {
   constructor(x, y, r, col) {
@@ -19,22 +20,6 @@ class Drop {
   randomColor() {
     return color(random(255), random(255), random(255));
   }
-
-  // marble(other) {
-  //   for (let v of this.vertices) {
-  //     let c = other.center;
-  //     let r = other.r;
-  //     let p = v.copy();
-  //     p.sub(c);
-  //     let m = p.mag();
-  //     if (m > 0) {
-  //       let root = sqrt(1 + (r * r) / (m * m));
-  //       p.mult(root);
-  //       p.add(c);
-  //       v.set(p);
-  //     }
-  //   }
-  // }
 
   marble(other) {
     let c = other.center;
