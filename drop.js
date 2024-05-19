@@ -1,9 +1,8 @@
-// drop.js
-const circleDetail = 360; // Detalle del círculo, reducible a 180 vértices para optimización
+const circleDetail = 180; // Reducir el detalle del círculo a 180 vértices
 
 class Drop {
   constructor(x, y, r, col) {
-    this.center = createVector(x, y);
+    this.center = createVector(x, y); // Usar p5.Vector para optimizaciones internas de p5.js
     this.r = r;
     this.vertices = this.createVertices();
     this.col = col || this.randomColor();
@@ -13,11 +12,11 @@ class Drop {
   createVertices() {
     let vertices = [];
     for (let i = 0; i < circleDetail; i++) {
-      let angle = map(i, 0, circleDetail, 0, TWO_PI);
+      let angle = (i / circleDetail) * TWO_PI;
       let v = createVector(cos(angle), sin(angle))
         .mult(this.r)
         .add(this.center);
-      vertices[i] = v;
+      vertices.push(v);
     }
     return vertices;
   }
@@ -30,12 +29,14 @@ class Drop {
   // Efecto de mármol entre gotas
   marble(other) {
     let c = other.center;
-    let r = other.r;
+    let rSquared = other.r * other.r;
+
     for (let v of this.vertices) {
-      let p = v.copy().sub(c);
-      let m = p.mag();
-      if (m > 0) {
-        let root = sqrt(1 + (r * r) / (m * m));
+      let p = p5.Vector.sub(v, c);
+      let mSquared = p.x * p.x + p.y * p.y;
+
+      if (mSquared > 0) {
+        let root = sqrt(1 + rSquared / mSquared);
         p.mult(root).add(c);
         v.set(p);
       }

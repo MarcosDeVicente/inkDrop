@@ -16,7 +16,7 @@ let backgroundColor = "#000000";
 
 // Configuración inicial del canvas
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight, WEBGL); // Usar WebGL para mejorar el rendimiento gráfico
   background(backgroundColor);
   dropSize = 10000;
   setInterval(drawCanvas, 16); // Redibujar a 60 FPS
@@ -25,6 +25,15 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   background(backgroundColor);
+}
+
+// Ajustar las funciones de p5.js para WebGL
+function adjustedMouseX() {
+  return mouseX - width / 2;
+}
+
+function adjustedMouseY() {
+  return mouseY - height / 2;
 }
 
 // Manejar la presión del mouse
@@ -44,8 +53,8 @@ function mouseReleased() {
     let pressDuration = millis() - pressStartTime;
     let dropRadius = pressDuration / 10;
     let drop = new Drop(
-      mouseX,
-      mouseY,
+      adjustedMouseX(),
+      adjustedMouseY(),
       dropRadius,
       randomDropColor
         ? color(random(255), random(255), random(255))
@@ -62,7 +71,7 @@ function mouseReleased() {
 // Manejar el arrastre del mouse
 function mouseDragged() {
   if (isPressing && millis() - lastDropTime > dropInterval) {
-    createDrop(mouseX, mouseY, currentDropColor);
+    createDrop(adjustedMouseX(), adjustedMouseY(), currentDropColor);
     lastDropTime = millis();
     mouseMovedSincePress = true;
     needsRedraw = true;
@@ -81,7 +90,7 @@ function drawCanvas() {
     let pressDuration = millis() - pressStartTime;
     dropSize = pressDuration / 10;
     fill(100, 100, 255, 100);
-    ellipse(mouseX, mouseY, dropSize * 2);
+    ellipse(adjustedMouseX(), adjustedMouseY(), dropSize * 2);
   }
 }
 
