@@ -22,6 +22,11 @@ function setup() {
   setInterval(drawCanvas, 16); // Redibujar a 60 FPS
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  background(backgroundColor);
+}
+
 // Manejar la presión del mouse
 function mousePressed() {
   pressStartTime = millis();

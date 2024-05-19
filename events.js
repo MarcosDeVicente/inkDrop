@@ -1,5 +1,3 @@
-// events.js
-
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("clearButton").addEventListener("click", function () {
     drops = [];
@@ -41,4 +39,31 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("input", function (event) {
       setDropColor(event.target.value);
     });
+
+  // Manejadores de eventos de touch
+  document.addEventListener("touchstart", handleTouchStart, false);
+  document.addEventListener("touchend", handleTouchEnd, false);
+  document.addEventListener("touchmove", handleTouchMove, false);
 });
+
+function handleTouchStart(event) {
+  if (event.targetTouches.length == 1) {
+    let touch = event.targetTouches[0];
+    mouseX = touch.pageX;
+    mouseY = touch.pageY;
+    mousePressed();
+  }
+}
+
+function handleTouchEnd(event) {
+  mouseReleased();
+}
+
+function handleTouchMove(event) {
+  if (event.targetTouches.length == 1) {
+    let touch = event.targetTouches[0];
+    mouseX = touch.pageX;
+    mouseY = touch.pageY;
+    mouseDragged();
+  }
+}
