@@ -52,6 +52,7 @@ function mouseReleased(e) {
   isPressing = false; // Indicar que se dejó de presionar el mouse
 }
 
+// sketch.js
 function mouseDragged(e) {
   if (isPressing && millis() - lastDropTime > dropInterval) {
     createDrop(mouseX, mouseY, currentDropColor); // Pasar el color actual

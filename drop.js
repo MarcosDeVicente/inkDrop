@@ -1,5 +1,5 @@
 // drop.js
-const circleDetail = 180; // Reducir a 180 vértices
+const circleDetail = 360; // Reducir a 180 vértices
 
 class Drop {
   constructor(x, y, r, col) {
