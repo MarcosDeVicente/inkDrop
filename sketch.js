@@ -1,13 +1,13 @@
 // sketch.js
 
 // Variables globales
+const maxDrops = 250;
 let drops = [];
 let pressStartTime;
 let dropSize;
 let isPressing = false;
 let lastDropTime = 0;
-const maxDrops = 250;
-let dropInterval = 0;
+let dropInterval = 20;
 let mouseMovedSincePress = false;
 let currentDropColor;
 let needsRedraw = true;

@@ -1,4 +1,4 @@
-const circleDetail = 180; // Reducir el detalle del círculo a 180 vértices
+const circleDetail = 250; // Reducir el detalle del círculo a 180 vértices
 
 class Drop {
   constructor(x, y, r, col) {
