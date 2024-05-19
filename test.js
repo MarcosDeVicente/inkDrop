@@ -2,9 +2,9 @@ let drops = [];
 let pressStartTime;
 let dropSize;
 let isPressing = false;
-let lastDropTime = 500; // Variable para controlar el tiempo entre gotas
+let lastDropTime = 0; // Inicializar en 0 para el primer frame
 const maxDrops = 500; // Máximo número de gotas
-const dropInterval = 0; // Intervalo mínimo entre gotas en milisegundos
+let dropInterval = 0; // Intervalo mínimo entre gotas en milisegundos, ajustable
 let mouseMovedSincePress = false; // Variable para verificar si el mouse se ha movido desde que se presionó
 let currentDropColor; // Variable para almacenar el color de las gotas mientras se arrastra
 
@@ -19,6 +19,8 @@ function mousePressed(e) {
   isPressing = true; // Indicar que se está presionando el mouse
   mouseMovedSincePress = false; // Resetear la variable de movimiento del mouse
   currentDropColor = color(random(255), random(255), random(255)); // Generar un nuevo color para la serie de gotas
+  // Usa e.clientX y e.clientY para las coordenadas
+  createDrop(e.clientX, e.clientY, currentDropColor);
 }
 
 function mouseReleased(e) {
@@ -27,8 +29,8 @@ function mouseReleased(e) {
     let dropRadius = pressDuration / 10; // Ajustar el tamaño de la gota basado en la duración
 
     let drop = new Drop(
-      mouseX,
-      mouseY,
+      e.clientX,
+      e.clientY,
       dropRadius,
       color(random(255), random(255), random(255))
     ); // Usar un color aleatorio
@@ -49,7 +51,7 @@ function mouseReleased(e) {
 
 function mouseDragged(e) {
   if (isPressing && millis() - lastDropTime > dropInterval) {
-    createDrop(mouseX, mouseY, currentDropColor); // Pasar el color actual
+    createDrop(e.clientX, e.clientY, currentDropColor); // Pasar el color actual
     lastDropTime = millis(); // Actualizar el tiempo de la última gota
     mouseMovedSincePress = true; // Indicar que el mouse se ha movido
   }
@@ -91,3 +93,31 @@ function createDrop(x, y, col) {
     drops.shift(); // Eliminar la gota más antigua
   }
 }
+
+// Añadir los eventos para evitar el comportamiento por defecto del navegador móvil
+document.addEventListener(
+  "touchstart",
+  function (e) {
+    e.preventDefault(); // Previene el comportamiento por defecto
+    mousePressed(e.touches[0]); // Simula mousePressed
+  },
+  { passive: false }
+);
+
+document.addEventListener(
+  "touchend",
+  function (e) {
+    e.preventDefault(); // Previene el comportamiento por defecto
+    mouseReleased(e.changedTouches[0]); // Simula mouseReleased
+  },
+  { passive: false }
+);
+
+document.addEventListener(
+  "touchmove",
+  function (e) {
+    e.preventDefault(); // Previene el comportamiento por defecto
+    mouseDragged(e.touches[0]); // Simula mouseDragged
+  },
+  { passive: false }
+);
