@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("downloadButton")
     .addEventListener("click", function () {
-      saveImage();
+      saveCanvas("marbling_art", "jpg");
     });
 
   document
@@ -65,32 +65,5 @@ function handleTouchMove(event) {
     mouseX = touch.pageX;
     mouseY = touch.pageY;
     mouseDragged();
-  }
-}
-
-function saveImage() {
-  let canvas = document.querySelector("canvas");
-  let dataUrl = canvas.toDataURL("image/jpeg", 1.0);
-
-  if (navigator.canShare && navigator.canShare({ files: [] })) {
-    fetch(dataUrl)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const file = new File([blob], "marbling_art.jpg", {
-          type: "image/jpeg",
-        });
-        navigator
-          .share({
-            files: [file],
-            title: "Marbling Art",
-            text: "Check out my artwork!",
-          })
-          .catch((error) => console.log("Error sharing:", error));
-      });
-  } else {
-    let link = document.createElement("a");
-    link.href = dataUrl;
-    link.download = "marbling_art.jpg";
-    link.click();
   }
 }
