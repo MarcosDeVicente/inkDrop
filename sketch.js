@@ -14,6 +14,14 @@ let needsRedraw = true;
 let randomDropColor = true;
 let backgroundColor = "#000000";
 
+// Detectar si es un dispositivo móvil
+const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(
+  window.navigator.userAgent
+);
+if (isMobile) {
+  dropInterval = 0;
+}
+
 // Configuración inicial del canvas
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL); // Usar WebGL para mejorar el rendimiento gráfico
