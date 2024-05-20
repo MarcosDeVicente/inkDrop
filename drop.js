@@ -1,4 +1,4 @@
-const circleDetail = 250; // Reducir el detalle del círculo a 180 vértices
+const circleDetail = 150; // Reducir el detalle del círculo a 180 vértices
 
 class Drop {
   constructor(x, y, r, col) {
@@ -26,7 +26,7 @@ class Drop {
     return color(random(255), random(255), random(255));
   }
 
-  // Efecto de mármol entre gotas
+  // Efecto agua entre gotas
   marble(other) {
     let c = other.center;
     let rSquared = other.r * other.r;

@@ -1,13 +1,13 @@
 // sketch.js
 
 // Variables globales
-const maxDrops = 250;
+const maxDrops = 200;
 let drops = [];
 let pressStartTime;
 let dropSize;
 let isPressing = false;
 let lastDropTime = 0;
-let dropInterval = 20;
+let dropInterval = 15;
 let mouseMovedSincePress = false;
 let currentDropColor;
 let needsRedraw = true;
@@ -18,7 +18,6 @@ let backgroundColor = "#000000";
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL); // Usar WebGL para mejorar el rendimiento gráfico
   background(backgroundColor);
-  dropSize = 10000;
   setInterval(drawCanvas, 16); // Redibujar a 60 FPS
 }
 
@@ -51,7 +50,7 @@ function mousePressed() {
 function mouseReleased() {
   if (!mouseMovedSincePress) {
     let pressDuration = millis() - pressStartTime;
-    let dropRadius = pressDuration / 10;
+    let dropRadius = pressDuration / 15; // Ajustar aquí también para consistencia
     let drop = new Drop(
       adjustedMouseX(),
       adjustedMouseY(),
@@ -88,7 +87,7 @@ function drawCanvas() {
   }
   if (isPressing) {
     let pressDuration = millis() - pressStartTime;
-    dropSize = pressDuration / 10;
+    dropSize = pressDuration / 15; // Ajustar el factor de división para crecimiento más lento
     fill(100, 100, 255, 100);
     ellipse(adjustedMouseX(), adjustedMouseY(), dropSize * 2);
   }
@@ -97,7 +96,7 @@ function drawCanvas() {
 // Crear una nueva gota
 function createDrop(x, y, col) {
   let pressDuration = millis() - pressStartTime;
-  let dropRadius = pressDuration / 10;
+  let dropRadius = pressDuration / 15; // Ajustar aquí también para consistencia
   let drop = new Drop(x, y, dropRadius, col);
   drops.forEach((other) => other.marble(drop));
   drops.push(drop);
